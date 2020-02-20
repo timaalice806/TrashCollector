@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -26,8 +27,9 @@ namespace Trash_Collector.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RegisterModel(
-            UserManager<IdentityUser> userManager,
+        public RegisterModel
+
+            (UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
@@ -64,7 +66,8 @@ namespace Trash_Collector.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-            [Required] public string Role{ get; set; }
+            [Required] 
+            public string Role { get; set; }
     }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -87,7 +90,16 @@ namespace Trash_Collector.Areas.Identity.Pages.Account
                 {
                     if(await _roleManager.RoleExistsAsync(Input.Role))
                     { 
-                        await _userManager.AddToRoleAsync(user, Input.Role); 
+                        await _userManager.AddToRoleAsync(user, Input.Role);
+
+                        if (Input.Role == "Customer")
+                        {
+                            return RedirectToAction("Create", "Customers");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Create", "Employees");
+                        }
                     }
 
                     _logger.LogInformation("User created a new account with password.");
