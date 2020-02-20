@@ -13,6 +13,8 @@ namespace Trash_Collector.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        public object Input { get; set; }
+        public object Role { get; set; }
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -20,6 +22,9 @@ namespace Trash_Collector.Controllers
 
         public IActionResult Index()
         {
+            //var newcustomer = Trash_Collector.Models.Account();
+            //Models.Account account = new Models.Account();
+
             return View();
         }
 

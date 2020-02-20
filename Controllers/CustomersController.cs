@@ -21,10 +21,13 @@ namespace Trash_Collector.Controllers
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Customer customer)
         {
-            var applicationDbContext = _context.Customer.Include(c => c.Account).Include(c => c.Address).Include(c => c.IdentityUser);
-            return View(await applicationDbContext.ToListAsync());
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            customer.IdentityUserId = userId;
+
+            var currentCustomer = _context.Customer.Where(c => c.IdentityUser = userId);
+            return View(await currentCustomer.ToListAsync());
         }
 
         // GET: Customers/Details/5
@@ -71,12 +74,13 @@ namespace Trash_Collector.Controllers
 
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index",customer);
+
             }
             ViewData["AccountID"] = new SelectList(_context.Set<Account>(), "ID", "ID", customer.AccountID);
             ViewData["AddressID"] = new SelectList(_context.Set<Address>(), "AddressID", "AddressID", customer.AddressID);
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
-            return View(customer);
+            return View("Index","Customer");
         }
 
         // GET: Customers/Edit/5
