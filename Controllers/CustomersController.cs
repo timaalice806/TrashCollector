@@ -24,7 +24,7 @@ namespace Trash_Collector.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-          
+
             var currentCustomer = await _context.Customer
                 .Include(c => c.Account)
                 .Include(c => c.Address)
@@ -77,13 +77,13 @@ namespace Trash_Collector.Controllers
 
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index","Customers");
+                return RedirectToAction("Index", "Customers");
 
             }
             ViewData["AccountID"] = new SelectList(_context.Set<Account>(), "ID", "ID", customer.AccountID);
             ViewData["AddressID"] = new SelectList(_context.Set<Address>(), "AddressID", "AddressID", customer.AddressID);
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
-            return View("Index",customer);
+            return View("Index", customer);
         }
 
         // GET: Customers/Edit/5
@@ -110,7 +110,7 @@ namespace Trash_Collector.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,LastName,AddressID,AccountID,IdentityUserId")] Customer customer)
+        public async Task<IActionResult> Edit(int id, Customer customer)
         {
             if (id != customer.ID)
             {
@@ -179,5 +179,21 @@ namespace Trash_Collector.Controllers
         {
             return _context.Customer.Any(e => e.ID == id);
         }
+        private bool SuspendService(Account account)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            DateTime currentDate = DateTime.Today;
+
+            if (currentDate >= account.StartDay && currentDate <= account.EndDay)
+
+            {    
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }    
     }
 }

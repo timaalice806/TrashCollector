@@ -12,7 +12,7 @@ namespace Trash_Collector.Models
         public int AccountID { get; set; }
         //--------------------------------//
         [Display(Name = "Pickup Day")]
-        public DayOfWeek PickUpDay { get; set; }
+        public string PickUpDay { get; set; }
         //--------------------------------//
         [Display(Name = "One Time Pickup")]
         public DateTime OneTimePickUp { get; set; }
