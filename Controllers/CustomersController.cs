@@ -21,13 +21,16 @@ namespace Trash_Collector.Controllers
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index(Customer customer)
+        public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            customer.IdentityUserId = userId;
-
-            var currentCustomer = _context.Customer.Where(c => c.IdentityUser = userId);
-            return View(await currentCustomer.ToListAsync());
+          
+            var currentCustomer = await _context.Customer
+                .Include(c => c.Account)
+                .Include(c => c.Address)
+                .Where(c => c.IdentityUserId == userId)
+                .ToListAsync();
+            return View(currentCustomer);
         }
 
         // GET: Customers/Details/5
@@ -65,7 +68,7 @@ namespace Trash_Collector.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FirstName,LastName,AddressID,AccountID,IdentityUserId")] Customer customer)
+        public async Task<IActionResult> Create(Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -74,13 +77,13 @@ namespace Trash_Collector.Controllers
 
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index",customer);
+                return RedirectToAction("Index","Customers");
 
             }
             ViewData["AccountID"] = new SelectList(_context.Set<Account>(), "ID", "ID", customer.AccountID);
             ViewData["AddressID"] = new SelectList(_context.Set<Address>(), "AddressID", "AddressID", customer.AddressID);
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
-            return View("Index","Customer");
+            return View("Index",customer);
         }
 
         // GET: Customers/Edit/5

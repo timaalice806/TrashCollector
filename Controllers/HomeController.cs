@@ -22,9 +22,6 @@ namespace Trash_Collector.Controllers
 
         public IActionResult Index()
         {
-            //var newcustomer = Trash_Collector.Models.Account();
-            //Models.Account account = new Models.Account();
-
             return View();
         }
 
