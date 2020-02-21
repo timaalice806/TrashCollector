@@ -10,11 +10,23 @@ namespace Trash_Collector.Models
     {
         [Key]
         public int AccountID { get; set; }
-        public string PickUpDay { get; set; }
+        //--------------------------------//
+        [Display(Name = "Pickup Day")]
+        public DayOfWeek PickUpDay { get; set; }
+        //--------------------------------//
+        [Display(Name = "One Time Pickup")]
         public DateTime OneTimePickUp { get; set; }
+        //--------------------------------//
+        [Display(Name = "Account Status")]
         public bool AccountStatus { get; set; }
+        //--------------------------------//
+        [Display(Name = "Start Day")]
         public DateTime StartDay { get; set; }
+        //--------------------------------//
+        [Display(Name = "End Day")]
         public DateTime EndDay { get; set; }
+        //--------------------------------//
+        [Display(Name = "Balance")]
         public double Balance { get; set; }
     }
 }

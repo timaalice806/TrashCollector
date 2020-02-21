@@ -5,49 +5,54 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Account Details</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Account</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => model.Account.PickUpDay)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.Account.OneTimePickUp)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.Account.AccountStatus)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Account)
+                @Html.DisplayNameFor(model => model.Account.StartDay)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdentityUser)
+                @Html.DisplayNameFor(model => model.Account.EndDay)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account.Balance)
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
+                @Html.DisplayFor(modelItem => item.Account.PickUpDay)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastName)
+                @Html.DisplayFor(modelItem => item.Account.OneTimePickUp)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address.AddressID)
+                @Html.DisplayFor(modelItem => item.Account.AccountStatus)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Account.AccountID)
+                @Html.DisplayFor(modelItem => item.Account.StartDay)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdentityUser.Id)
+                @Html.DisplayFor(modelItem => item.Account.EndDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.Balance)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
