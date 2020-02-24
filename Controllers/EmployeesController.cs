@@ -25,7 +25,7 @@ namespace Trash_Collector.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var currentEmployee = _context.Employee.Where(e => e.IdentityUserId == userId).FirstOrDefault();/*.Include(e => e.ZipCode);*/
+            var currentEmployee = _context.Employee.Where(e => e.IdentityUserId == userId).FirstOrDefault();
 
             var customers = _context.Customer
                 .Include(c => c.Account)
