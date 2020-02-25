@@ -31,7 +31,7 @@ namespace Trash_Collector.Controllers
                 .Include(c => c.Account)
                 .Include(c => c.Address)
                 .Where(c => c.Address.ZipCode == currentEmployee.ZipCode).ToList();
-
+            _context.SaveChanges();
             return View(customers);
         }
 

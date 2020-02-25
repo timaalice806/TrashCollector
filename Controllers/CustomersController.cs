@@ -30,6 +30,7 @@ namespace Trash_Collector.Controllers
                 .Include(c => c.Address)
                 .Where(c => c.IdentityUserId == userId)
                 .ToListAsync();
+            _context.SaveChanges();
             return View(currentCustomer);
         }
 
