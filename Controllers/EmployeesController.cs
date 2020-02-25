@@ -163,10 +163,28 @@ namespace Trash_Collector.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool EmployeeExists(int id)
         {
             return _context.Employee.Any(e => e.ID == id);
         }
+        //private bool SuspendService(Account account)
+        //{
+        //    var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var currentEmployee = _context.Employee.Where(e => e.IdentityUserId == userId).FirstOrDefault();
+
+        //    DateTime currentDate = DateTime.Today;
+
+        //    if (currentDate == account.StartDay && currentDate <= account.EndDay)
+
+        //    {
+        //        account.Balance += 15;
+        //        _context.SaveChangesAsync();
+        //        return account.AccountStatus = true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
     }
 }

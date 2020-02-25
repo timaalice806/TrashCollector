@@ -121,6 +121,12 @@ namespace Trash_Collector.Controllers
             {
                 try
                 {
+                    //var customerDB = _context.Customer.Where(c => c.ID == customer.ID).Single();
+                    //customerDB.Account.StartDay = customer.Account.StartDay;
+                    //customerDB.Account.EndDay = customer.Account.EndDay;
+
+                    //*Won't save my changes to pickup day-one-time pickup-suspend start & end dates*//
+
                     _context.Update(customer);
                     await _context.SaveChangesAsync();
                 }
@@ -135,7 +141,7 @@ namespace Trash_Collector.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index",customer);
             }
             ViewData["AccountID"] = new SelectList(_context.Set<Account>(), "ID", "ID", customer.AccountID);
             ViewData["AddressID"] = new SelectList(_context.Set<Address>(), "AddressID", "AddressID", customer.AddressID);
@@ -179,21 +185,21 @@ namespace Trash_Collector.Controllers
         {
             return _context.Customer.Any(e => e.ID == id);
         }
-        private bool SuspendService(Account account)
-        {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //private bool SuspendService(Account account)
+        //{
+        //    var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            DateTime currentDate = DateTime.Today;
+        //    DateTime currentDate = DateTime.Today;
 
-            if (currentDate >= account.StartDay && currentDate <= account.EndDay)
+        //    if (currentDate >= account.StartDay && currentDate <= account.EndDay)
 
-            {    
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }    
+        //    {    
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}    
     }
 }
